@@ -15,6 +15,7 @@ MASTER_SECRET=''
 for _ in {1..3}; do
   MASTER_SECRET=${MASTER_SECRET}`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 64`
 done
+# MASTER_SECRET="THIS_IS_A_MASTER_SECRET"
 
 # Ask arg
 read -p "KEY NAME: " ARG_NAME_REAL
