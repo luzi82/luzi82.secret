@@ -6,17 +6,21 @@ trap "{ rm -rf ${TMP_PATH}; }" EXIT
 
 # random secret
 SECRET=''
-for _ in {1..64}; do
+for _ in {1..3}; do
   SECRET=${SECRET}`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 64`
 done
-SECRET=${SECRET}`echo ''`
 # SECRET="THIS_IS_A_SECRET"
+
+MASTER_SECRET=''
+for _ in {1..3}; do
+  MASTER_SECRET=${MASTER_SECRET}`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 64`
+done
 
 # Ask arg
 read -p "KEY NAME: " ARG_NAME_REAL
 read -p "KEY EMAIL: " ARG_NAME_EMAIL
 read -p "KEY COMMENT: " ARG_NAME_COMMENT
-read -sp "MASTER_SECRET: " ARG_MASTER_SECRET
+#read -sp "MASTER_SECRET: " ARG_MASTER_SECRET
 
 # rm old files
 rm -rf master
@@ -34,14 +38,14 @@ cat master.tmpl/gpg-gen-key \
 | sed --expression="s/__NAME_REAL__/${NAME_REAL_E}/g" \
 | sed --expression="s/__NAME_EMAIL__/${NAME_EMAIL_E}/g" \
 | sed --expression="s/__NAME_COMMENT__/${NAME_COMMENT_E}/g" \
-| sed --expression="s/__MASTER_SECRET__/${ARG_MASTER_SECRET}/g" \
+| sed --expression="s/__MASTER_SECRET__/${MASTER_SECRET}/g" \
 > master/gpg-gen-key
 
 # create master/SECRET
 echo ${SECRET} > master/SECRET
 
 # create master/MASTER_SECRET
-echo ${ARG_MASTER_SECRET} > master/MASTER_SECRET
+echo ${MASTER_SECRET} > master/MASTER_SECRET
 
 # create gpg folder
 mkdir -p ${TMP_PATH}/gpg
@@ -60,5 +64,10 @@ gpg --homedir ${TMP_PATH}/gpg --armor --output public-key.asc --export ${ARG_NAM
 # create secret pack
 ./encrypt_master.sh
 
-# echo done
-echo DONE
+# echo secret
+echo ======
+echo SECRET
+cat master/SECRET
+echo ======
+echo MASTER_SECRET
+cat master/MASTER_SECRET
