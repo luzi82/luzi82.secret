@@ -5,7 +5,11 @@ TMP_PATH=`mktemp -d`
 trap "{ rm -rf ${TMP_PATH}; }" EXIT
 
 # random secret
-SECRET=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 128 ; echo ''`
+SECRET=''
+for _ in {1..64}; do
+  SECRET=${SECRET}`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 64`
+done
+SECRET=${SECRET}`echo ''`
 # SECRET="THIS_IS_A_SECRET"
 
 # Ask arg
@@ -30,7 +34,7 @@ cat master.tmpl/gpg-gen-key \
 | sed --expression="s/__NAME_REAL__/${NAME_REAL_E}/g" \
 | sed --expression="s/__NAME_EMAIL__/${NAME_EMAIL_E}/g" \
 | sed --expression="s/__NAME_COMMENT__/${NAME_COMMENT_E}/g" \
-| sed --expression="s/__SECRET__/${SECRET}/g" \
+| sed --expression="s/__MASTER_SECRET__/${ARG_MASTER_SECRET}/g" \
 > master/gpg-gen-key
 
 # create master/SECRET
@@ -47,7 +51,7 @@ chmod 700 ${TMP_PATH}/gpg
 gpg --homedir ${TMP_PATH}/gpg --batch --gen-key ${PWD}/master/gpg-gen-key
 
 # export private key
-gpg --homedir ${TMP_PATH}/gpg --batch --pinentry-mode loopback --passphrase-file master/SECRET --armor --output master/private-key.asc --export-secret-key ${ARG_NAME_EMAIL}
+gpg --homedir ${TMP_PATH}/gpg --batch --pinentry-mode loopback --passphrase-file master/MASTER_SECRET --armor --output master/private-key.asc --export-secret-key ${ARG_NAME_EMAIL}
 
 # export public key
 gpg --homedir ${TMP_PATH}/gpg         --output public-key.gpg --export ${ARG_NAME_EMAIL}
@@ -56,7 +60,5 @@ gpg --homedir ${TMP_PATH}/gpg --armor --output public-key.asc --export ${ARG_NAM
 # create secret pack
 ./encrypt_master.sh
 
-# echo SECRET
-echo ======
-echo SECRET:
-echo ${SECRET}
+# echo done
+echo DONE

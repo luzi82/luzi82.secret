@@ -17,4 +17,4 @@ gpg --homedir ${TMP_PATH}/gpg --batch --import master/private-key.asc
 # tar | encrypt | sign
 tar czf - secret | \
 gpg --symmetric --cipher-algo AES256 --pinentry-mode loopback --passphrase-file master/SECRET | \
-gpg --homedir ${TMP_PATH}/gpg --batch --pinentry-mode loopback --passphrase-file master/SECRET --output secret.tar.gz.gpg.sig --sign
+gpg --homedir ${TMP_PATH}/gpg --batch --pinentry-mode loopback --passphrase-file master/MASTER_SECRET --output secret.tar.gz.gpg.sig --sign
