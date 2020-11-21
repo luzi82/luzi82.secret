@@ -28,7 +28,7 @@ $ ./encrypt_master.sh
 ## Step
 
 1. Fork this project.
-1. Run `./reset.sh`.
+1. Run `./reset.sh`.  `MASTER_SECRET` should be stored in safe place.
 1. Create folder `secret`.  Put stuff into the folder.
 1. Run `./encrypt_secret.sh`.
 1. Add modified `public-key.*`, `master.tar.gz.gpg.sig`, `secret.tar.gz.gpg.sig` into git and push.
