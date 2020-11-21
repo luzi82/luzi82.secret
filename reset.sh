@@ -5,7 +5,7 @@ TMP_PATH=`mktemp -d`
 trap "{ rm -rf ${TMP_PATH}; }" EXIT
 
 # random secret
-SECRET=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 64 ; echo ''`
+SECRET=`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 256 ; echo ''`
 # SECRET="THIS_IS_A_SECRET"
 
 # Ask arg
