@@ -8,10 +8,7 @@ else
   echo
 fi
 
-rm -rf tmp secret
-mkdir -p tmp
+rm -rf secret
 
-gpg --quiet --batch --yes --decrypt --passphrase="${SECRET}" --output tmp/secret.tar.gz secret.tar.gz.gpg
-tar -xzf tmp/secret.tar.gz
-
-rm -rf tmp
+gpg --quiet --batch --yes --decrypt --passphrase="${SECRET}" secret.tar.gz.gpg | \
+tar xzf -
