@@ -20,10 +20,12 @@ $ ./encrypt.sh
 ## Step
 
 1. Fork this project.
-1. Create new folder `secret`.
-1. Put plain text secret key to `secret/SECRET`.
+1. Run `./decrypt.sh`, use `THIS_IS_A_SECRET` as secret.
+1. Modify `secret/SECRET`.
+1. Modify `secret/gpg-gen-key`.  `Passphrase` should be same as `secret/SECRET`.
+1. Run `./reset_key.sh [KEY_ID]`.  Replace `[KEY_ID]` with `Name-Email` in `secret/gpg-gen-key`.
 1. Run `./encrypt.sh`.
-1. Add modified `secret.tar.gz.gpg` into git and push.
+1. Add modified `public-key.*`, `secret.tar.gz.gpg` into git and push.
 
 ## Files
 
@@ -40,7 +42,7 @@ Download secret directly and decrypt
 # download public key, store it to ensure the signature is good.  It should not change in future.
 wget https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/public-key.gpg
 
-curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg | \
+curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg.sig | \
 gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt | \
 gpg --quiet --batch --yes --decrypt --passphrase="THIS_IS_A_SECRET" | \
 tar xzf -
