@@ -8,29 +8,47 @@ Put secret folder in github, download everywhere, protected by GnuGP.
 
 ```
 # decrypt secret folder
-$ ./decrypt.sh 
+$ ./decrypt_secret.sh 
 SECRET: (type: THIS_IS_A_SECRET)
 # Folder "secret" is created
-# Contains file "SECRET" and "lenna.png"
+# Contains file "lenna.png"
+
+# decrypt master folder
+$ ./decrypt_master.sh 
+MASTER_SECRET: (type: THIS_IS_A_MASTER_SECRET)
+# Folder "master" is created
 
 # encrypt secret folder
-$ ./encrypt.sh
+$ ./encrypt_secret.sh
+
+# encrypt master folder
+$ ./encrypt_master.sh
 ```
 
 ## Step
 
 1. Fork this project.
-1. Run `./reset.sh [name] [email] [comment]`.
-1. Run `./encrypt.sh`.
-1. Add modified `public-key.*`, `secret.tar.gz.gpg` into git and push.
+1. Run `./reset.sh`.
+1. Create folder `secret`.  Put stuff into the folder.
+1. Run `./encrypt_secret.sh`.
+1. Add modified `public-key.*`, `master.tar.gz.gpg.sig`, `secret.tar.gz.gpg.sig` into git and push.
 
 ## Files
 
-* `decrypt.sh` : decryption script.
-* `encrypt.sh` : encryption script.
+* `decrypt_master.sh` : master decryption script.
+* `decrypt_secret.sh` : secret decryption script.
+* `encrypt_master.sh` : master encryption script.
+* `encrypt_secret.sh` : secret encryption script.
+* `master.tar.gz.gpg` : Secret data encrypted by GnuGP.
+* `master/` : Master secret folder, containing data of encryption key.  Should NOT be commited to git.
+* `master/gpg-gen-key` : param of gpg key generation
+* `master/MASTER_SECRET` : MASTER_SECRET key
+* `master/private-key.asc` : GPG private key for signing
+* `master/SECRET` : SECRET key for sharing to trusted party
+* `public-key.*` : GPG public key for verifying
+* `reset.sh` : Script file to reset master folder.
 * `secret.tar.gz.gpg` : Secret data encrypted by GnuGP.
 * `secret/` : Secret folder, containing plain secret data to be protected.  Should NOT be commited to git.
-* `secret/SECRET` : Secret key in plain text.
 
 ## Extra
 
@@ -41,6 +59,6 @@ wget https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/publ
 
 curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg.sig | \
 gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt | \
-gpg --quiet --batch --yes --decrypt --passphrase="THIS_IS_A_SECRET" | \
+gpg --quiet --batch --yes --decrypt --passphrase="Chdswfgk1mNWZia4Hct2YJJzByUuyFqeUOOGcxhASmW0cMHVymw7rNvxkP8v9aJv" | \
 tar xzf -
 ```

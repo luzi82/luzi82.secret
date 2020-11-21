@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-if [ -f secret/SECRET ]; then
-  SECRET=`cat secret/SECRET`
+if [ -f master/SECRET ]; then
+  SECRET=`cat master/SECRET`
 else
   read -sp "SECRET: " SECRET
   echo
