@@ -59,6 +59,6 @@ wget https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/publ
 
 curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg.sig | \
 gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt | \
-gpg --quiet --batch --yes --decrypt --passphrase="Chdswfgk1mNWZia4Hct2YJJzByUuyFqeUOOGcxhASmW0cMHVymw7rNvxkP8v9aJv" | \
+gpg --quiet --batch --yes --decrypt --passphrase="THIS_IS_A_SECRET" | \
 tar xzf -
 ```
