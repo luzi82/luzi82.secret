@@ -37,7 +37,11 @@ $ ./encrypt.sh
 
 Download secret directly and decrypt
 ```
+# download public key, store it to ensure the signature is good.  It should not change in future.
+wget https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/public-key.gpg
+
 curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg | \
+gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt | \
 gpg --quiet --batch --yes --decrypt --passphrase="THIS_IS_A_SECRET" | \
 tar xzf -
 ```
