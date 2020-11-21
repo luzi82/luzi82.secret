@@ -32,3 +32,12 @@ $ ./encrypt.sh
 * `secret.tar.gz.gpg` : Secret data encrypted by GnuGP.
 * `secret/` : Secret folder, containing plain secret data to be protected.  Should NOT be commited to git.
 * `secret/SECRET` : Secret key in plain text.
+
+## Extra
+
+Download secret directly and decrypt
+```
+curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg | \
+gpg --quiet --batch --yes --decrypt --passphrase="THIS_IS_A_SECRET" | \
+tar xzf -
+```
