@@ -2,11 +2,11 @@
 
 ```
 # download public key, store it to ensure the signature is good.  It should not change in future.
-curl https://raw.githubusercontent.com/luzi82/codelog.web-template.1601.secret/luzi82/public-key.gpg > public-key.gpg
-gpg --import public-key.gpg
+curl https://raw.githubusercontent.com/luzi82/codelog.web-template.1601.secret/luzi82/public-key.gpg -o public-key.gpg
 
-curl https://raw.githubusercontent.com/luzi82/codelog.web-template.1601.secret/luzi82/secret.tar.gz.gpg.sig | \
-gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt | \
+curl https://raw.githubusercontent.com/luzi82/codelog.web-template.1601.secret/luzi82/secret.tar.gz.gpg.sig -o secret.tar.gz.gpg.sig && \
+gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --verify secret.tar.gz.gpg.sig && \
+gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt secret.tar.gz.gpg.sig | \
 gpg --quiet --batch --yes --decrypt --passphrase="${LUZI82_SECRET}" | \
 tar xzf -
 ```
