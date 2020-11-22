@@ -55,10 +55,11 @@ $ ./encrypt_master.sh
 Download secret directly and decrypt
 ```
 # download public key, store it to ensure the signature is good.  It should not change in future.
-wget https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/public-key.gpg
+curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/public-key.gpg -o public-key.gpg
 
-curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg.sig | \
-gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt | \
+curl https://raw.githubusercontent.com/luzi82/codelog.secret_manager/master/secret.tar.gz.gpg.sig -o secret.tar.gz.gpg.sig && \
+gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --verify secret.tar.gz.gpg.sig && \
+gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt secret.tar.gz.gpg.sig | \
 gpg --quiet --batch --yes --decrypt --passphrase="THIS_IS_A_SECRET" | \
 tar xzf -
 ```
