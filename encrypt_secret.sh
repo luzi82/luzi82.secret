@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/bin/bash -e
 
 TMP_PATH=`mktemp -d`
 trap "{ rm -rf ${TMP_PATH}; }" EXIT

@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/bin/bash -e
 
 if [ -f master/MASTER_SECRET ]; then
   MASTER_SECRET=`cat master/MASTER_SECRET`
