@@ -43,7 +43,7 @@ $ ./encrypt_master.sh
 * `master/` : Master secret folder, containing data of encryption key.  Should NOT be commited to git.
 * `master/gpg-gen-key` : param of gpg key generation
 * `master/MASTER_SECRET` : MASTER_SECRET key
-* `master/private-key.asc` : GPG private key for signing
+* `master/private-key.asc` : GPG private key for signing, passphrase = MASTER_SECRET
 * `master/SECRET` : SECRET key for sharing to trusted party
 * `public-key.*` : GPG public key for verifying
 * `reset.sh` : Script file to reset master folder.
