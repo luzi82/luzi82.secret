@@ -15,8 +15,12 @@ fi
 cd ${PROJECT_ROOT_PATH}
 rm -rf ${PROJECT_ROOT_PATH}/master
 
-# verify | decrypt | untar
+# verify ; decrypt | untar
 cd ${PROJECT_ROOT_PATH}
+gpg \
+  --no-default-keyring \
+  --keyring ${PROJECT_ROOT_PATH}/public-key.gpg \
+  --verify ${PROJECT_ROOT_PATH}/master.tar.gz.gpg.sig
 gpg \
   --no-default-keyring \
   --keyring ${PROJECT_ROOT_PATH}/public-key.gpg \
