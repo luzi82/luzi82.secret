@@ -24,4 +24,8 @@ gpg --no-default-keyring --keyring ${GITPOD_REPO_ROOT}/luzi82/public-key.gpg --v
 gpg --no-default-keyring --keyring ${GITPOD_REPO_ROOT}/luzi82/public-key.gpg --decrypt ${GITPOD_REPO_ROOT}/luzi82/secret.tar.gz.gpg.sig | \
 gpg --quiet --batch --yes --decrypt --passphrase="${SECRET}" | \
 tar xzf -
+
+cp -R ${GITPOD_REPO_ROOT}/luzi82/secret/project-root/* ${GITPOD_REPO_ROOT}/
+
+. ${GITPOD_REPO_ROOT}/luzi82/secret/env.sh
 ```
