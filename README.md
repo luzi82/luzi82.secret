@@ -10,7 +10,7 @@ If you want something useful, go https://github.com/luzi82/codelog.secret_manage
 ```
 SECRET=...
 SM_URL=https://raw.githubusercontent.com/luzi82/luzi82.secret
-SM_BRANCH=codelog.flask.luzi82
+SM_BRANCH=codelog.websocket.luzi82
 
 # download public key, store it to ensure the signature is good.  It should not change in future.
 curl ${SM_URL}/${SM_BRANCH}/public-key.gpg -o public-key.gpg
