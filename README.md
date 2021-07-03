@@ -9,15 +9,18 @@ If you want something useful, go https://github.com/luzi82/codelog.secret_manage
 
 ```
 SECRET=...
+PROJECT_ROOT=...
 SM_URL=https://raw.githubusercontent.com/luzi82/luzi82.secret
 SM_BRANCH=codelog.websocket.luzi82
 
-# download public key, store it to ensure the signature is good.  It should not change in future.
-curl ${SM_URL}/${SM_BRANCH}/public-key.gpg -o public-key.gpg
+mkdir -p ${PROJECT_ROOT}/luzi82
 
-curl ${SM_URL}/${SM_BRANCH}/secret.tar.gz.gpg.sig -o secret.tar.gz.gpg.sig && \
-gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --verify secret.tar.gz.gpg.sig && \
-gpg --no-default-keyring --keyring ${PWD}/public-key.gpg --decrypt secret.tar.gz.gpg.sig | \
+# download public key, store it to ensure the signature is good.  It should not change in future.
+curl ${SM_URL}/${SM_BRANCH}/public-key.gpg -o ${PROJECT_ROOT}/luzi82/public-key.gpg
+
+curl ${SM_URL}/${SM_BRANCH}/secret.tar.gz.gpg.sig -o ${PROJECT_ROOT}/luzi82/secret.tar.gz.gpg.sig && \
+gpg --no-default-keyring --keyring ${PROJECT_ROOT}/luzi82/public-key.gpg --verify ${PROJECT_ROOT}/luzi82/secret.tar.gz.gpg.sig && \
+gpg --no-default-keyring --keyring ${PROJECT_ROOT}/luzi82/public-key.gpg --decrypt ${PROJECT_ROOT}/luzi82/secret.tar.gz.gpg.sig | \
 gpg --quiet --batch --yes --decrypt --passphrase="${SECRET}" | \
 tar xzf -
 ```
